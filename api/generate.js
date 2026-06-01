@@ -1,4 +1,4 @@
-export const config = { runtime: 'edge' };
+export const config = { maxDuration: 60 };
 
 // Simple in-memory rate limit store (resets per edge instance)
 // For demo requests only - limits abuse without needing Redis
@@ -29,7 +29,7 @@ function isRateLimited(ip) {
   return false;
 }
 
-export default async function handler(req) {
+export default async function handler(req, res) {
   // Only allow POST
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
